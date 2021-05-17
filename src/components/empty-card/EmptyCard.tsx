@@ -1,27 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import weatherbg from '../../images/weatherbg.svg'
+import './EmptyCard.scss'
 
-interface IEmptyCard {
-  className: string;
-}
-
-const EmptyCard: React.FC<IEmptyCard> = ({
-  className
-}) => {
+const EmptyCard: React.FC = () => {
   return (
-    <div className={className}>
+    <div className="bg-content">
       <img
-        className={`${className}__img`}
+        className="bg-content__img"
         src={weatherbg}
       />
-      <span className={`${className}__desc`}>Fill in all the fields and the weather will be displayed</span>
+      <span className="bg-content__desc">Fill in all the fields and the weather will be displayed</span>
     </div>
   )
-}
-
-EmptyCard.propTypes = {
-  className: PropTypes.any
 }
 
 export default EmptyCard

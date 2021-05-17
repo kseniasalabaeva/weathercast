@@ -1,0 +1,19 @@
+@import "../../variables";
+
+.bg-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6%;
+
+  &__img {
+    padding: $basic_spacing * 3;
+  }
+  
+  &__desc {
+    font-size: $body;
+    color: $secondary;
+    font-weight: bold;
+  }
+}
