@@ -1,37 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './WeatherCard.scss'
+
 const baseIconUrl = 'http://openweathermap.org/img/wn'
 
 interface IWeatherCardProps {
-  className: string;
   item: any;
 }
 
 const WeatherCard: React.FC<IWeatherCardProps> = ({
-  className,
   item
 }) => {
-  const getDate = () => {
+  function getDate (): string {
     return item?.dt ? new Date(item.dt * 1000).toLocaleDateString() : ''
   }
-  const getTemp = () => {
-    return item?.temp?.day ? (item.temp.day - 273.15).toFixed() : ''
+  function getTemp (): string {
+    return item?.temp?.day ? `${(item.temp.day - 273.15).toFixed()}°` : ''
   }
-  const getSrc = () => {
+  function getSrc (): string {
     return item?.weather?.length ? `${baseIconUrl}/${item.weather[0].icon}.png` : ''
   }
   return (
-      <div className={className}>
-        <span>Date = {getDate()}, </span>
-        <span>Temperature = {getTemp()}</span>
-        <img src={getSrc()} />
-      </div>
+    <div className="weather-card">
+      <span className="weather-card__date">{getDate()}</span>
+      <img src={getSrc()} className="weather-card__icon" />
+      <span className="weather-card__temp">{getTemp()}</span>
+    </div>
   )
 }
 
 WeatherCard.propTypes = {
-  className: PropTypes.any,
   item: PropTypes.any
 }
 

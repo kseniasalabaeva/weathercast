@@ -5,36 +5,32 @@ import { City } from '../../utils'
 
 import './Select.scss'
 
+type OnChangeType = (city: City) => void
+
 interface ISelectProps {
-  className: string,
-  onChange: any
+  onChange: OnChangeType | undefined;
 }
 
 const Select: React.FC<ISelectProps> = ({
-  className,
   onChange
 }) => {
   const [value, setValue] = useState(City.None)
 
-  const handleChangeCity = (event: ChangeEvent<HTMLSelectElement>) => {
+  function handleChangeCity (event: ChangeEvent<HTMLSelectElement>): void {
     const city = event.target.value as City
     setValue(city)
-    onChange(city)
+    onChange && onChange(city)
   }
 
   return (
-    <select onChange={handleChangeCity}
-            value={value}
-            className={className}
-    >
+    <select onChange={handleChangeCity} value={value}>
       {Object.values(City).map((city, index) => <option key={city} disabled={!index}>{city}</option>)}
     </select>
   )
 }
 
 Select.propTypes = {
-  className: PropTypes.any,
-  onChange: PropTypes.any
+  onChange: PropTypes.func
 }
 
 export default Select

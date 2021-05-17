@@ -1,83 +1,70 @@
 @import "../../variables";
 
 .homepage {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    min-height: 100vh;
-    background: url(../../images/bg.svg) $accent;
-    background-size: cover;
-    //TODO: adaptive bg image
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: url(../../images/bg.svg) $accent;
+  background-size: cover;
 
+  //TODO: adaptive bg image
     .header {
-        display: flex;
-        color: $base_weak;
-        width: 775px;
-        flex-direction: column;
+      display: flex;
+      flex-direction: column;
+      color: $base_weak;
+      width: 775px;
+      margin: 65px 0 48px;
 
-        .header__item {
-            font-weight: bold;
-            font-size: 102px;
-            line-height: 122px;
-
-            &:nth-child(1) {
-                align-self: flex-start;
-            }
-
-            &:nth-child(2) {
-                align-self: flex-end;
-            }
+        &__item {
+          font-weight: bold;
+          font-size: 102px;
+          max-height: 100px;
+          &:nth-child(1) {
+            align-self: flex-start;
+          }
+          &:nth-child(2) {
+            align-self: flex-end;
+          }
         }
     }
 
-    .card {
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      flex-direction: row;
+
+      &__item {
         display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
+        flex-direction: column;
+        background-color: $base_weak;
+        height: 524px;
+        width: 660px;
+        margin: 17px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 4px rgba(4, 5, 73, 0.25), 14px 14px 20px rgba(5, 6, 114, 0.2);
 
-        .card__item {
-            display: flex;
-            flex-direction: column;
-            background-color: $base_weak;
-            height: 524px;
-            width: 660px;
-            margin: 17px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 4px rgba(4, 5, 73, 0.25), 14px 14px 20px rgba(5, 6, 114, 0.2);
-
-            .week-card {
-                display: flex;
-
-                .week-card__title {
-                    font-size: $h1;
-                    color: $base_strong;
-                    font-weight: 700;
-                }
-
-                .bg-content__desc {
-                    font-size: $body;
-                    color: $secondary;
-                    font-weight: bold;
-                }
-            }
-
-            .past-card {
-                font-size: $h1;
-                color: $base_strong;
-                font-weight: 700;
-            }
-
-            .week-card__title {
-                font-size: $h1;
-                color: $base_strong;
-                font-weight: 700;
-            }
-
-            .past-card__title {
-                font-size: $h1;
-                color: $base_strong;
-                font-weight: 700;
-            }
+        &__title {
+          font-size: $h1;
+          color: $base_strong;
+          font-weight: bold;
+          margin: 7.5% 8.7% 2.4% 8.7%;
         }
+      }
+
+      .weather-cards {
+        position: relative;
+        height: 100%;
+        padding-left: 48px;
+        padding-right: 48px;
+        display: flex;
+
+        &__container {
+          display: flex;
+          position: absolute;
+        }
+      }
     }
 }
