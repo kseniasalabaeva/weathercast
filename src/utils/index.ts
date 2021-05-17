@@ -1,4 +1,5 @@
 export enum City {
+  None = 'Select a city',
   Samara = 'Samara',
   Togliatty = 'Togliatty',
   Saratov = 'Saratov',
@@ -7,6 +8,7 @@ export enum City {
 }
 
 export const Coordinates = {
+  [City.None]: { lat: undefined, lon: undefined },
   [City.Samara]: { lat: 53.19, lon: 50.10 },
   [City.Togliatty]: { lat: 53.50, lon: 49.42 },
   [City.Saratov]: { lat: 51.53, lon: 46.03 },

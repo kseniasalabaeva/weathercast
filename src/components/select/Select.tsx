@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { City } from '../../utils'
@@ -14,9 +14,20 @@ const Select: React.FC<ISelectProps> = ({
   className,
   onChange
 }) => {
+  const [value, setValue] = useState(City.None)
+
+  const handleChangeCity = (event: ChangeEvent<HTMLSelectElement>) => {
+    const city = event.target.value as City
+    setValue(city)
+    onChange(city)
+  }
+
   return (
-    <select onChange={onChange} className={className}>
-      {Object.values(City).map(city => <option key={city}>{city}</option>)}
+    <select onChange={handleChangeCity}
+            value={value}
+            className={className}
+    >
+      {Object.values(City).map((city, index) => <option key={city} disabled={!index}>{city}</option>)}
     </select>
   )
 }
