@@ -46,9 +46,19 @@
             box-shadow: 0px 4px 4px rgba(4, 5, 73, 0.25), 14px 14px 20px rgba(5, 6, 114, 0.2);
 
             .week-card {
-                font-size: $h1;
-                color: $base_strong;
-                font-weight: 700;
+                display: flex;
+
+                .week-card__title {
+                    font-size: $h1;
+                    color: $base_strong;
+                    font-weight: 700;
+                }
+
+                .bg-content__desc {
+                    font-size: $body;
+                    color: $secondary;
+                    font-weight: bold;
+                }
             }
 
             .past-card {

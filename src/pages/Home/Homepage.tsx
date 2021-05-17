@@ -4,6 +4,7 @@ import axios from 'axios'
 import Select from '../../components/select/Select'
 import { City, Coordinates } from '../../utils'
 import WeatherCard from '../../components/weather-card/WeatherCard'
+import EmptyCard from '../../components/empty-card/EmptyCard'
 
 const Homepage = () => {
   const [serverdata, setServerData] = useState<Array<any>>([])
@@ -46,17 +47,18 @@ const Homepage = () => {
             onChange={handleCityChange}
           />
            { serverdata.length
-             ? serverdata.map(item => <WeatherCard
+             ? serverdata.map(item =>
+              <WeatherCard
                 key={item.dt}
                 item={item}
                 className="week-card__item"
-               />)
-             : ''
+              />)
+             : <EmptyCard className="week-card bg-content"/>
            }
             {console.log('this is serverdata.lat from jsx ', serverdata)}
         </div>
           <div className="card__item past-card">
-            <span className="past-card__title">Forecast for a Datee in the Past</span>
+            <span className="past-card__title">Forecast for a Date in the Past</span>
             <select className="past-card city-select">
               <option>Bigcity1</option>
               <option>Smallcity2</option>
