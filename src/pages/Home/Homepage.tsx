@@ -10,6 +10,7 @@ import './Homepage.scss'
 
 const Homepage = () => {
   const [serverdata, setServerData] = useState<Array<any>>([])
+  const [index, setIndex] = useState(0)
 
   const API_KEY = '7384a8fb7699cee18fbfa10906161e96'
   const baseUrl = `https://api.openweathermap.org/data/2.5/onecall?&exclude=minutely,hourly,alerts&appid=${API_KEY}`
@@ -19,6 +20,7 @@ const Homepage = () => {
       const url = `${baseUrl}&lat=${lat}&lon=${lon}`
       const { data } = (await axios.get(url))
       setServerData(data.daily)
+      console.log('this is value for 3 days ', serverdata)
     } catch (error) {
       throw new Error(error.message)
     }
@@ -32,9 +34,21 @@ const Homepage = () => {
     getData(lat, lon)
   }
 
-  function handlePrevClick (): void {}
+  function getFormattedList (): Array<any> {
+    return serverdata.slice(index, index + 3)
+  }
 
-  function handleNextClick (): void {}
+  function handlePrevClick (): void {
+    if (index > 0) {
+      setIndex(index - 1)
+    }
+  }
+
+  function handleNextClick (): void {
+    if (index < (serverdata.length - 3)) {
+      setIndex(index + 1)
+    }
+  }
 
   return (
     <div className="homepage">
@@ -50,7 +64,7 @@ const Homepage = () => {
              ? <div className="weather-cards">
                  <button onClick={handlePrevClick}>{'<'}</button>
                  <div className="weather-cards__container">
-               { serverdata.map(item =>
+               { getFormattedList().map(item =>
                 <WeatherCard
                   key={item.dt}
                   item={item}
