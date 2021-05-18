@@ -7,6 +7,8 @@ import EmptyCard from '../../components/empty-card/EmptyCard'
 import { City, Coordinates } from '../../utils'
 
 import './Homepage.scss'
+import chevronLeft from '../../images/chevronLeft.svg'
+import chevronRight from '../../images/chevronRight.svg'
 
 const Homepage = () => {
   const [serverdata, setServerData] = useState<Array<any>>([])
@@ -62,7 +64,9 @@ const Homepage = () => {
           <Select onChange={handleCityChange} />
            { serverdata.length
              ? <div className="weather-cards">
-                 <button onClick={handlePrevClick}>{'<'}</button>
+                 <button className="weather-cards__button-arrow" onClick={handlePrevClick}>
+                   <img src={chevronLeft} />
+                  </button>
                  <div className="weather-cards__container">
                { getFormattedList().map(item =>
                 <WeatherCard
@@ -70,7 +74,9 @@ const Homepage = () => {
                   item={item}
                 />)}
                 </div>
-                <button onClick={handleNextClick}>{'>'}</button>
+                <button className="weather-cards__button-arrow" onClick={handleNextClick}>
+                  <img src={chevronRight} />
+                </button>
             </div>
              : <EmptyCard />
            }
@@ -78,14 +84,23 @@ const Homepage = () => {
           <div className="cards__item">
             <span className="cards__item__title">Forecast for a Date in the Past</span>
             <Select onChange={handleCityChange} />
-           { serverdata.length
-             ? serverdata.map(item =>
-
-              <WeatherCard
-                key={item.dt}
-                item={item}
-              />)
-             : <EmptyCard />
+            { serverdata.length
+              ? <div className="weather-cards">
+                  <button className="button-arrow-left" onClick={handlePrevClick}>
+                    <img src={chevronLeft} />
+                  </button>
+                 <div className="weather-cards__container">
+               { getFormattedList().map(item =>
+                <WeatherCard
+                  key={item.dt}
+                  item={item}
+                />)}
+                </div>
+                <button className="button-arrow-right" onClick={handleNextClick}>
+                  <img src={chevronRight} />
+                </button>
+            </div>
+              : <EmptyCard />
            }
           </div>
       </div>

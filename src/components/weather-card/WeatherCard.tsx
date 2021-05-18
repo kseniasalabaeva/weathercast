@@ -23,9 +23,11 @@ const WeatherCard: React.FC<IWeatherCardProps> = ({
   }
   return (
     <div className="weather-card">
-      <span className="weather-card__date">{getDate()}</span>
-      <img src={getSrc()} className="weather-card__icon" />
-      <span className="weather-card__temp">{getTemp()}</span>
+      <div className="weather-card__container">
+        <span className="weather-card__date">{getDate()}</span>
+        <img src={getSrc()} className="weather-card__icon" />
+        <span className="weather-card__temp">{getTemp()}</span>
+      </div>
     </div>
   )
 }

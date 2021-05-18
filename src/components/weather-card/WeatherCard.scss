@@ -2,7 +2,6 @@
 
 .weather-card {
   display: flex;
-  flex-direction: column;
   width: 174px;
   height: 238px;
   background-color: $accent;
@@ -12,6 +11,14 @@
   border-radius: 8px;
   margin: 5px;
 
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    margin: 20px;
+  }
+
   &__date {
     color: $base_weak;
     font-size: $body;
@@ -19,12 +26,14 @@
   }
 
   &__icon {
-      width: 75px; // this value was choosen because of bad quality of returned icons from the back-end
+    width: 90px; // this value was choosen because of bad quality of returned icons from the back-end
+    align-self: center;
   }
 
   &__temp {
     color: $base_weak;
-    font-size: $body;
+    font-size: $h1;
     font-weight: bold;
+    align-self: flex-end;
   }
 }
