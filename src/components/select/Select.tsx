@@ -23,8 +23,11 @@ const Select: React.FC<ISelectProps> = ({
   }
 
   return (
-    <select onChange={handleChangeCity} value={value}>
-      {Object.values(City).map((city, index) => <option key={city} disabled={!index}>{city}</option>)}
+    <select onChange={handleChangeCity}
+            value={value}
+            className="city-select"
+    >
+      {Object.values(City).map((city, index) => <option key={city} className="city-select__option" disabled={!index}>{city}</option>)}
     </select>
   )
 }

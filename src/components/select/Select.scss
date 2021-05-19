@@ -1,6 +1,6 @@
 @import "../../variables";
 
-select {
+.city-select {
   font-family: Ubuntu;
   font-size: $body;
   font-weight: normal;
@@ -12,8 +12,9 @@ select {
   border-radius: 8px;
   background-color: rgba(128, 131, 164, 0.06);
   outline: none;
+  cursor: pointer;
 
-  option {
+  &__option {
     padding: 0.7em;
     background-color: $base_weak;
     border-radius: 8px;
@@ -21,7 +22,7 @@ select {
 }
 
 @media screen and (min-width: 600px) {
-  select {
-    width: 38%;
+  .city-select {
+    width: 252px;
   }
 }
