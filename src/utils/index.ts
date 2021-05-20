@@ -1,5 +1,5 @@
 export enum City {
-  None = 'Select a city',
+  None = 'Select city',
   Samara = 'Samara',
   Togliatty = 'Togliatty',
   Saratov = 'Saratov',

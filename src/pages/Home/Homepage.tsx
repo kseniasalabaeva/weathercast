@@ -13,9 +13,10 @@ import { timeStamp } from 'console'
 
 const Homepage = () => {
   const [serverdata, setServerData] = useState<Array<any>>([])
-  const [pastserverdata, setPastServerData] = useState<Array<any>>([])
+  const [pastserverdata, setPastServerData] = useState<any>()
   const [index, setIndex] = useState(0)
-  const [date, setDate] = useState<any>()
+  const [secondCardDate, setSecondCardDate] = useState<number>()
+  const [secondCardCity, setSecondCardCity] = useState<City>(City.None)
 
   const API_KEY = '7384a8fb7699cee18fbfa10906161e96'
   const baseUrl = `https://api.openweathermap.org/data/2.5/onecall?&exclude=minutely,hourly,alerts&appid=${API_KEY}`
@@ -36,10 +37,13 @@ const Homepage = () => {
   async function getPastData (lat?: number, lon?: number, time?: number): Promise<void> {
     try {
       const url = `${pastUrl}&lat=${lat}&lon=${lon}&dt=${time}`
+      console.log('url', url)
       const { data } = (await axios.get(url))
+      console.log('data', data)
       setPastServerData(data.current)
+      console.log('pastserverdata', pastserverdata)
     } catch (error) {
-      throw new Error(error.message)
+      alert('Выбранная дата не соответствует подписке :)')
     }
   }
   //  Function for changing sity in select and showing weather cards
@@ -66,26 +70,25 @@ const Homepage = () => {
       setIndex(index + 1)
     }
   }
-  let dateFromInput: Date
 
-  function handleDateChange (event: any) {
-    dateFromInput = event.target.value
+  function handleChangeSecondCardDate (event: any) {
+    const dateFromInput = event.target.value
     const timestamp = +(new Date(dateFromInput)) / 1000
-    console.log('this is date ', timestamp)
+    setSecondCardDate(timestamp)
   }
 
   function handlePastCityChange (city: City): void {
-    if (!(Coordinates[city].lat || Coordinates[city].lon)) {
-      return
-    }
-    const { lat, lon } = Coordinates[city]
-    console.log(lat, lon)
-    getPastData(lat, lon, 1621296000)
-    console.log(pastserverdata)
+    setSecondCardCity(city)
   }
 
-  // function showPastData (city: any, date: any) {
-  // }
+  useEffect(() => {
+    const coords = Coordinates[secondCardCity]
+    if (!(coords.lat || coords.lon) || !secondCardDate) {
+      return
+    }
+    const { lat, lon } = coords
+    getPastData(lat, lon, secondCardDate)
+  }, [secondCardDate, secondCardCity])
 
   return (
     <div className="homepage">
@@ -120,23 +123,15 @@ const Homepage = () => {
             <span className="cards__item__title">Forecast for a Date in the Past</span>
               <div className="">
                 <Select onChange={handlePastCityChange} />
-                <input type='date' className="date-input" onChange={handleDateChange}></input>
+                <input type='date' className="date-input" onChange={handleChangeSecondCardDate}></input>
               </div>
-                { serverdata.length
+                { pastserverdata
                   ? <div className="weather-cards">
-                      <button className="button-arrow-left" onClick={handlePrevClick}>
-                        <img src={chevronLeft} />
-                      </button>
                      <div className="weather-cards__container">
-                   { getFormattedList().map(item =>
                     <WeatherCard
-                      key={item.dt}
-                      item={item}
-                    />)}
+                      item={pastserverdata}
+                    />
                     </div>
-                    <button className="button-arrow-right" onClick={handleNextClick}>
-                      <img src={chevronRight} />
-                    </button>
                 </div>
                   : <EmptyCard />
                 }
