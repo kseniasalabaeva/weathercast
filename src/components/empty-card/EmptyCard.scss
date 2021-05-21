@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 6%;
+  margin-top: 36px;
 
   &__img {
     padding: $basic_spacing * 3;
@@ -15,5 +15,11 @@
     font-size: $body;
     color: $secondary;
     font-weight: bold;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .bg-content {
+    margin-top: 9px;
   }
 }

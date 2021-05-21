@@ -7,7 +7,7 @@
   color: $secondary;
   margin: 2.4% 0 0 8.7%;
   padding: 0.7em;
-  width: 100%;
+  width: 252px;
   border: 2px solid rgba(128, 131, 164, 0.2);
   border-radius: 8px;
   background-color: rgba(128, 131, 164, 0.06);
@@ -21,8 +21,3 @@
   }
 }
 
-@media screen and (min-width: 600px) {
-  .city-select {
-    width: 252px;
-  }
-}

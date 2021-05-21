@@ -7,10 +7,13 @@ const baseIconUrl = 'http://openweathermap.org/img/wn'
 
 interface IWeatherCardProps {
   item: any;
+  width?: string
 }
 
 const WeatherCard: React.FC<IWeatherCardProps> = ({
-  item
+  item,
+  width,
+  ...props
 }) => {
   function getDate (): string {
     console.log('Get data', item.dt)
@@ -28,7 +31,8 @@ const WeatherCard: React.FC<IWeatherCardProps> = ({
     return item?.weather?.length ? `${baseIconUrl}/${item.weather[0].icon}.png` : ''
   }
   return (
-    <div className="weather-card">
+    <div className="weather-card"
+         style={{ width: width }}>
       <div className="weather-card__container">
         <span className="weather-card__date">{getDate()}</span>
         <img src={getSrc()} className="weather-card__icon" />
@@ -39,7 +43,8 @@ const WeatherCard: React.FC<IWeatherCardProps> = ({
 }
 
 WeatherCard.propTypes = {
-  item: PropTypes.any
+  item: PropTypes.any,
+  width: PropTypes.string
 }
 
 export default WeatherCard

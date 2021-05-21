@@ -9,7 +9,6 @@ import { City, Coordinates } from '../../utils'
 import './Homepage.scss'
 import chevronLeft from '../../images/chevronLeft.svg'
 import chevronRight from '../../images/chevronRight.svg'
-import { timeStamp } from 'console'
 
 const Homepage = () => {
   const [serverdata, setServerData] = useState<Array<any>>([])
@@ -27,19 +26,19 @@ const Homepage = () => {
     try {
       const url = `${baseUrl}&lat=${lat}&lon=${lon}`
       const { data } = (await axios.get(url))
+      console.log('data', data)
       setServerData(data.daily)
       console.log('this is value for 3 days ', serverdata)
     } catch (error) {
       throw new Error(error.message)
     }
   }
-  //  Function for getting data about weather in the past
+  //  Function for getting data about weather in the 'past'
   async function getPastData (lat?: number, lon?: number, time?: number): Promise<void> {
     try {
       const url = `${pastUrl}&lat=${lat}&lon=${lon}&dt=${time}`
       console.log('url', url)
       const { data } = (await axios.get(url))
-      console.log('data', data)
       setPastServerData(data.current)
       console.log('pastserverdata', pastserverdata)
     } catch (error) {
@@ -56,6 +55,9 @@ const Homepage = () => {
   }
   //  Function for showing 3 cards
   function getFormattedList (): Array<any> {
+    if (window.innerWidth <= 400) {
+      return serverdata.slice(index, index + 1)
+    }
     return serverdata.slice(index, index + 3)
   }
 
@@ -66,13 +68,15 @@ const Homepage = () => {
   }
 
   function handleNextClick (): void {
-    if (index < (serverdata.length - 3)) {
+    if (index < (serverdata.length - 3) || (window.innerWidth < 400 && index < (serverdata.length - 1))) {
       setIndex(index + 1)
     }
   }
 
+  //  Functions for changing date and city in the 'past' block
   function handleChangeSecondCardDate (event: any) {
-    const dateFromInput = event.target.value
+    const dateFromInput = event.target.value + ' 12:00:00'
+    console.log(dateFromInput)
     const timestamp = +(new Date(dateFromInput)) / 1000
     setSecondCardDate(timestamp)
   }
@@ -108,6 +112,7 @@ const Homepage = () => {
                  <div className="weather-cards__container">
                { getFormattedList().map(item =>
                 <WeatherCard
+                  width='174px'
                   key={item.dt}
                   item={item}
                 />)}
@@ -123,12 +128,16 @@ const Homepage = () => {
             <span className="cards__item__title">Forecast for a Date in the Past</span>
               <div className="">
                 <Select onChange={handlePastCityChange} />
-                <input type='date' className="date-input" onChange={handleChangeSecondCardDate}></input>
+                <input type='date'
+                       className="date-input"
+                       onChange={handleChangeSecondCardDate}
+                />
               </div>
                 { pastserverdata
                   ? <div className="weather-cards">
                      <div className="weather-cards__container">
                     <WeatherCard
+                      width='100%'
                       item={pastserverdata}
                     />
                     </div>
