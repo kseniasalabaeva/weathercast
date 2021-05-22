@@ -14,7 +14,7 @@ const Homepage = () => {
   const [serverdata, setServerData] = useState<Array<any>>([])
   const [pastserverdata, setPastServerData] = useState<any>()
   const [index, setIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 460)
   const [secondCardDate, setSecondCardDate] = useState<number>(0)
   const [secondCardCity, setSecondCardCity] = useState<City>(City.None)
 
