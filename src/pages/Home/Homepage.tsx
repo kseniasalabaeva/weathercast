@@ -95,8 +95,9 @@ const Homepage = () => {
    * @param event
    */
   function handleChangeSecondCardDate (event: any): void {
-    const dateFromInput = event.target.value + ' 12:00:00'
-    const timestamp = +(new Date(dateFromInput)) / 1000
+    const date = new Date(event.target.value)
+    date.setHours(12)
+    const timestamp = (+date) / 1000
     setSecondCardDate(timestamp)
   }
 

@@ -104,7 +104,7 @@
     }
 }
 
-@media screen and (min-width: 461px) and (max-width: 792px) {
+@media screen and (max-width: 792px) {
   .homepage {
     @include value-prefix(width, fit-content);
   }
