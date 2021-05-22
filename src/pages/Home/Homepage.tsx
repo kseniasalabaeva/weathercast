@@ -14,38 +14,49 @@ const Homepage = () => {
   const [serverdata, setServerData] = useState<Array<any>>([])
   const [pastserverdata, setPastServerData] = useState<any>()
   const [index, setIndex] = useState(0)
-  const [secondCardDate, setSecondCardDate] = useState<number>()
+  const [isMobile, setIsMobile] = useState(false)
+  const [secondCardDate, setSecondCardDate] = useState<number>(0)
   const [secondCardCity, setSecondCardCity] = useState<City>(City.None)
 
   const API_KEY = '7384a8fb7699cee18fbfa10906161e96'
   const baseUrl = `https://api.openweathermap.org/data/2.5/onecall?&exclude=minutely,hourly,alerts&appid=${API_KEY}`
   const pastUrl = `https://api.openweathermap.org/data/2.5/onecall/timemachine?&appid=${API_KEY}`
 
-  //  Function for getting data about weather for a week
+  /**
+   * Function for getting data about weather for a week
+   * @param lat
+   * @param lon
+   */
   async function getData (lat?: number, lon?: number): Promise<void> {
     try {
       const url = `${baseUrl}&lat=${lat}&lon=${lon}`
       const { data } = (await axios.get(url))
-      console.log('data', data)
       setServerData(data.daily)
-      console.log('this is value for 3 days ', serverdata)
     } catch (error) {
       throw new Error(error.message)
     }
   }
-  //  Function for getting data about weather in the 'past'
+
+  /**
+   * Function for getting data about weather in the 'past'
+   * @param lat
+   * @param lon
+   * @param time
+   */
   async function getPastData (lat?: number, lon?: number, time?: number): Promise<void> {
     try {
       const url = `${pastUrl}&lat=${lat}&lon=${lon}&dt=${time}`
-      console.log('url', url)
       const { data } = (await axios.get(url))
       setPastServerData(data.current)
-      console.log('pastserverdata', pastserverdata)
     } catch (error) {
       alert('Выбранная дата не соответствует подписке :)')
     }
   }
-  //  Function for changing sity in select and showing weather cards
+
+  /**
+   * Function for changing city in select and showing weather cards
+   * @param city
+   */
   function handleCityChange (city: City): void {
     if (!(Coordinates[city].lat || Coordinates[city].lon)) {
       return
@@ -53,12 +64,17 @@ const Homepage = () => {
     const { lat, lon } = Coordinates[city]
     getData(lat, lon)
   }
-  //  Function for showing 3 cards
+
+  const updateDeviceState = () => setIsMobile(window.innerWidth <= 460)
+
   function getFormattedList (): Array<any> {
-    if (window.innerWidth <= 400) {
-      return serverdata.slice(index, index + 1)
+    const max = serverdata.length - 3
+    const shouldIndexBeChanged = !isMobile && max > 0 && index > max
+    const i = shouldIndexBeChanged ? max : index
+    if (shouldIndexBeChanged) {
+      setIndex(max)
     }
-    return serverdata.slice(index, index + 3)
+    return serverdata.slice(i, i + (isMobile ? 1 : 3))
   }
 
   function handlePrevClick (): void {
@@ -68,22 +84,27 @@ const Homepage = () => {
   }
 
   function handleNextClick (): void {
-    if (index < (serverdata.length - 3) || (window.innerWidth < 400 && index < (serverdata.length - 1))) {
+    const isNextAvailable = index < serverdata.length - (isMobile ? 1 : 3)
+    if (isNextAvailable) {
       setIndex(index + 1)
     }
   }
 
-  //  Functions for changing date and city in the 'past' block
-  function handleChangeSecondCardDate (event: any) {
+  /**
+   * Functions for changing date and city in the 'past' block
+   * @param event
+   */
+  function handleChangeSecondCardDate (event: any): void {
     const dateFromInput = event.target.value + ' 12:00:00'
-    console.log(dateFromInput)
     const timestamp = +(new Date(dateFromInput)) / 1000
     setSecondCardDate(timestamp)
   }
 
-  function handlePastCityChange (city: City): void {
-    setSecondCardCity(city)
-  }
+  const handlePastCityChange = (city: City) => setSecondCardCity(city)
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDeviceState)
+  }, [])
 
   useEffect(() => {
     const coords = Coordinates[secondCardCity]
@@ -93,6 +114,10 @@ const Homepage = () => {
     const { lat, lon } = coords
     getPastData(lat, lon, secondCardDate)
   }, [secondCardDate, secondCardCity])
+
+  useEffect(() => () => {
+    window.removeEventListener('resize', updateDeviceState)
+  }, [])
 
   return (
     <div className="homepage">

@@ -5,7 +5,7 @@
   font-size: $body;
   font-weight: normal;
   color: $secondary;
-  margin: 2.4% 0 0 8.7%;
+  margin: 16px 0 0 58px;
   padding: 0.7em;
   width: 252px;
   border: 2px solid rgba(128, 131, 164, 0.2);
@@ -21,3 +21,8 @@
   }
 }
 
+@media screen and (max-width: 460px) {
+  .city-select {
+    margin: 16px 24px 0 24px;
+  }
+}

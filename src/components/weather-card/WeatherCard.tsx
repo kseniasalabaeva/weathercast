@@ -12,22 +12,18 @@ interface IWeatherCardProps {
 
 const WeatherCard: React.FC<IWeatherCardProps> = ({
   item,
-  width,
-  ...props
+  width
 }) => {
   function getDate (): string {
-    console.log('Get data', item.dt)
     return item?.dt ? new Date(item.dt * 1000).toLocaleDateString() : ''
   }
   function getTemp (): string {
-    console.log('Get temp', item.temp.day)
     if (item.temp.day) {
       return item?.temp?.day ? `${(item.temp.day - 273.15).toFixed()}°` : ''
     }
     return item?.temp ? `${(item.temp - 273.15).toFixed()}°` : ''
   }
   function getSrc (): string {
-    console.log('Get icon', item.weather[0].icon)
     return item?.weather?.length ? `${baseIconUrl}/${item.weather[0].icon}.png` : ''
   }
   return (

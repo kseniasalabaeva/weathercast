@@ -10,3 +10,9 @@ $h1: 32px;
 $h2: 24px;
 $body: 16px;
 $meta: 14px;
+
+@mixin value-prefix($prop, $value) {
+  @each $prefix in ('-webkit-', '-moz-', '') {
+    #{$prop}: #{$prefix}#{$value};
+  }
+}

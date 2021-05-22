@@ -36,3 +36,9 @@
     align-self: flex-end;
   }
 }
+
+@media screen and (max-width: 460px) {
+  .weather-card {
+    border: 2px solid $base_strong;
+  }
+}
