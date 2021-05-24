@@ -12,7 +12,8 @@ Things I didn't have time to do, but planning to implement in the future:
 
 - Create custom input and select. I've tested implementation on several devices and it seems to me that it looks not so bad. But it's certainly need to be improved.
 - Change the display of weather cards in the mobile version in the block "7 days weather". At the moment, one card and buttons "arrow-left" and "arrow-right" are displayed on mobile devices instead of horizontal scroll
-- I also had a plan to add unit tests (written with jest) and e2e tests (written with cypress)
+- I had a plan to add unit tests (written with jest) and e2e tests (written with cypress)
+- I also forgot to track the state of the backend (when it’s slow, there should be a loader)
 
 
 ## Available Scripts
