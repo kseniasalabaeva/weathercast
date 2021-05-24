@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/weathercast/static/css/main.b0a95662.chunk.css",
-    "main.js": "/weathercast/static/js/main.7e335e84.chunk.js",
-    "main.js.map": "/weathercast/static/js/main.7e335e84.chunk.js.map",
+    "main.css": "/weathercast/static/css/main.7bc52949.chunk.css",
+    "main.js": "/weathercast/static/js/main.44addeb7.chunk.js",
+    "main.js.map": "/weathercast/static/js/main.44addeb7.chunk.js.map",
     "runtime-main.js": "/weathercast/static/js/runtime-main.0add914a.js",
     "runtime-main.js.map": "/weathercast/static/js/runtime-main.0add914a.js.map",
     "static/js/2.9446c1aa.chunk.js": "/weathercast/static/js/2.9446c1aa.chunk.js",
     "static/js/2.9446c1aa.chunk.js.map": "/weathercast/static/js/2.9446c1aa.chunk.js.map",
     "index.html": "/weathercast/index.html",
-    "static/css/main.b0a95662.chunk.css.map": "/weathercast/static/css/main.b0a95662.chunk.css.map",
+    "static/css/main.7bc52949.chunk.css.map": "/weathercast/static/css/main.7bc52949.chunk.css.map",
     "static/js/2.9446c1aa.chunk.js.LICENSE.txt": "/weathercast/static/js/2.9446c1aa.chunk.js.LICENSE.txt",
     "static/media/fonts.scss": "/weathercast/static/media/Ubuntu-Regular.fbdecfce.ttf",
     "static/media/Homepage.scss": "/weathercast/static/media/bg.ed1da820.svg",
@@ -19,7 +19,7 @@
   "entrypoints": [
     "static/js/runtime-main.0add914a.js",
     "static/js/2.9446c1aa.chunk.js",
-    "static/css/main.b0a95662.chunk.css",
-    "static/js/main.7e335e84.chunk.js"
+    "static/css/main.7bc52949.chunk.css",
+    "static/js/main.44addeb7.chunk.js"
   ]
 }
