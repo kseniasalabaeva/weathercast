@@ -1,6 +1,6 @@
 ## Weather Forecast
 
-**This is a page showing weather forecasts for different cities **
+**This is a page showing weather forecasts for different cities**
 
 **Some explanations**
 
