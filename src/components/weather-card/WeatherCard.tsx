@@ -24,7 +24,7 @@ const WeatherCard: React.FC<IWeatherCardProps> = ({
     return item?.temp ? `${(item.temp - 273.15).toFixed()}°` : ''
   }
   function getSrc (): string {
-    return item?.weather?.length ? `${baseIconUrl}/${item.weather[0].icon}.png` : ''
+    return item?.weather?.length ? `${baseIconUrl}/${item.weather[0].icon}@2x.png` : ''
   }
   return (
     <div className="weather-card"
