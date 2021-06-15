@@ -1,6 +1,6 @@
 import React from 'react'
 
-import weatherbg from '../../images/weatherbg.svg'
+import weatherbg from '../../assets/images/weatherbg.svg'
 import './EmptyCard.scss'
 
 const EmptyCard: React.FC = () => {

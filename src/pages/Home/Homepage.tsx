@@ -7,8 +7,8 @@ import EmptyCard from '../../components/empty-card/EmptyCard'
 import { City, Coordinates } from '../../utils'
 
 import './Homepage.scss'
-import chevronLeft from '../../images/chevronLeft.svg'
-import chevronRight from '../../images/chevronRight.svg'
+import chevronLeft from '../../assets/images/chevronLeft.svg'
+import chevronRight from '../../assets/images/chevronRight.svg'
 
 const Homepage = () => {
   const [serverdata, setServerData] = useState<Array<any>>([])
