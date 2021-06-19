@@ -11,27 +11,27 @@ import chevronLeft from '../../assets/images/chevronLeft.svg'
 import chevronRight from '../../assets/images/chevronRight.svg'
 
 const Homepage = () => {
-  const [serverdata, setServerData] = useState<Array<any>>([])
+  const [weekserverdata, setWeekServerData] = useState<Array<any>>([])
   const [pastserverdata, setPastServerData] = useState<any>()
   const [index, setIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 460)
-  const [secondCardDate, setSecondCardDate] = useState<number>(0)
-  const [secondCardCity, setSecondCardCity] = useState<City>(City.None)
+  const [pastCardDate, setPastCardDate] = useState<number>(0)
+  const [pastCardCity, setPastCardCity] = useState<City>(City.None)
 
   const API_KEY = '7384a8fb7699cee18fbfa10906161e96'
   const baseUrl = `https://api.openweathermap.org/data/2.5/onecall?&exclude=minutely,hourly,alerts&appid=${API_KEY}`
   const pastUrl = `https://api.openweathermap.org/data/2.5/onecall/timemachine?&appid=${API_KEY}`
 
   /**
-   * Function for getting data about weather for a week
+   * Function for getting data about weather for a week. This is function for first cards block
    * @param lat
    * @param lon
    */
-  async function getData (lat?: number, lon?: number): Promise<void> {
+  async function getWeekWeatherData (lat?: number, lon?: number): Promise<void> {
     try {
       const url = `${baseUrl}&lat=${lat}&lon=${lon}`
       const { data } = (await axios.get(url))
-      setServerData(data.daily)
+      setWeekServerData(data.daily)
     } catch (error) {
       throw new Error(error.message)
     }
@@ -43,7 +43,7 @@ const Homepage = () => {
    * @param lon
    * @param time
    */
-  async function getPastData (lat?: number, lon?: number, time?: number): Promise<void> {
+  async function getPastWeatherData (lat?: number, lon?: number, time?: number): Promise<void> {
     try {
       const url = `${pastUrl}&lat=${lat}&lon=${lon}&dt=${time}`
       const { data } = (await axios.get(url))
@@ -62,19 +62,23 @@ const Homepage = () => {
       return
     }
     const { lat, lon } = Coordinates[city]
-    getData(lat, lon)
+    getWeekWeatherData(lat, lon)
   }
 
   const updateDeviceState = () => setIsMobile(window.innerWidth <= 460)
 
+  /**
+   * Function that changes the number of displayed cards in the '7 day forecact' block depending on the screen size
+   *
+   */
   function getFormattedList (): Array<any> {
-    const max = serverdata.length - 3
+    const max = weekserverdata.length - 3
     const shouldIndexBeChanged = !isMobile && max > 0 && index > max
     const i = shouldIndexBeChanged ? max : index
     if (shouldIndexBeChanged) {
       setIndex(max)
     }
-    return serverdata.slice(i, i + (isMobile ? 1 : 3))
+    return weekserverdata.slice(i, i + (isMobile ? 1 : 3))
   }
 
   function handlePrevClick (): void {
@@ -84,7 +88,7 @@ const Homepage = () => {
   }
 
   function handleNextClick (): void {
-    const isNextAvailable = index < serverdata.length - (isMobile ? 1 : 3)
+    const isNextAvailable = index < weekserverdata.length - (isMobile ? 1 : 3)
     if (isNextAvailable) {
       setIndex(index + 1)
     }
@@ -94,27 +98,27 @@ const Homepage = () => {
    * Functions for changing date and city in the 'past' block
    * @param event
    */
-  function handleChangeSecondCardDate (event: any): void {
+  function handleChangePastCardDate (event: any): void {
     const date = new Date(event.target.value)
     date.setHours(12)
     const timestamp = (+date) / 1000
-    setSecondCardDate(timestamp)
+    setPastCardDate(timestamp)
   }
 
-  const handlePastCityChange = (city: City) => setSecondCardCity(city)
+  const handlePastCityChange = (city: City) => setPastCardCity(city)
 
   useEffect(() => {
     window.addEventListener('resize', updateDeviceState)
   }, [])
 
   useEffect(() => {
-    const coords = Coordinates[secondCardCity]
-    if (!(coords.lat || coords.lon) || !secondCardDate) {
+    const coords = Coordinates[pastCardCity]
+    if (!(coords.lat || coords.lon) || !pastCardDate) {
       return
     }
     const { lat, lon } = coords
-    getPastData(lat, lon, secondCardDate)
-  }, [secondCardDate, secondCardCity])
+    getPastWeatherData(lat, lon, pastCardDate)
+  }, [pastCardDate, pastCardCity])
 
   useEffect(() => () => {
     window.removeEventListener('resize', updateDeviceState)
@@ -130,7 +134,7 @@ const Homepage = () => {
         <div className="cards__item">
           <span className="cards__item__title">7 Days Forecast</span>
           <Select onChange={handleCityChange} />
-           { serverdata.length
+           { weekserverdata.length
              ? <div className="weather-cards">
                  <button className="weather-cards__button-arrow" onClick={handlePrevClick}>
                    <img src={chevronLeft} />
@@ -156,7 +160,7 @@ const Homepage = () => {
                 <Select onChange={handlePastCityChange} />
                 <input type='date'
                        className="date-input"
-                       onChange={handleChangeSecondCardDate}
+                       onChange={handleChangePastCardDate}
                 />
               </div>
                 { pastserverdata
